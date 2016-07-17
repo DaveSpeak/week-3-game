@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hangman Game</title>
+</head>
+<body>
+
+<h1>Hangman Game!</h1>
+<h1>Press any letter to get started</h1>
+<div id="gamestart"></div>
+
+<script>
+
+	// VARIABLES
+	// ==========================================================================
+
+	var words = ["Skylab", "Apollo", "Armstrong", "Hubble", "quasar", "galaxy", "Saturn", "Jupiter", "Venus", "Space Shuttle" ]
+	var wins = 0;
+	var maxGuesses = 10;
+	var gameDiv = document.getElementById("gamestart");
+	var dashes = "";
+	var answer = "";
+	var mainHead = document.createElement("div");
+	var lettersGuessed ="";
+
+	// FUNCTIONS
+	// ==============================================================================
+
+	function startGame(){
+		answer = words[Math.floor(Math.random()*words.length)];
+		guesses=maxGuesses;
+		lettersGuessed="";
+		dashes="";
+		console.log(answer);
+		for(var i = 0; i < answer.length; i++) {
+			dashes+="-";
+		}
+		console.log(dashes);
+		displayHead();
+	}
+
+	function playGame() {
+		document.onkeyup = function(event){
+			var letter = String.fromCharCode(event.keyCode).toLowerCase();
+			if (checkUsed(lettersGuessed,letter) && letter.match(/[a-z," "]/i)) {
+				lettersGuessed+=letter;
+				guesses--;
+				for (i=0;i<answer.length;i++) {
+					var test = answer.charAt(i);
+					if (letter==test.toLowerCase()){
+						dashes=setCharAt(dashes,i,test);
+					}
+				}
+				displayHead();
+				if (dashes === answer){
+					wins++;
+					alert("Congrats - you win!!");
+					startGame();
+				}else if (guesses==0){
+					alert("Sorry - you lose!");
+					startGame();
+				}
+			}
+
+		}
+	}
+
+	function setCharAt(str,index,chr) {
+    	if(index > str.length-1) return str;
+    return str.substr(0,index) + chr + str.substr(index+1);
+	}
+
+	function spreadDisplay(str,char,flag){
+		var returnstr="";
+		for (i=0;i<str.length*2;i++){
+			if (i/2 === Math.floor(i/2)){
+				returnstr+=str.charAt(i/2);
+			}else {
+				if (flag || i!==(str.length*2)-1){
+				returnstr+=char;
+				}	
+			}
+		}
+		return returnstr;
+}
+	function displayHead(){
+		mainHead.innerHTML = "<h1>Wins: "+wins+
+		"<h1><h1>Guesses Remaining: "+guesses+
+		"<h1><h1>Current word<h1>"+spreadDisplay(dashes," ",true)+
+		"<h1>Letters Already Guessed:<h1>"+spreadDisplay(lettersGuessed,", ",false);
+		gameDiv.appendChild(mainHead);
+
+	}
+	function checkUsed(str,ltr){
+		for (i=0;i<str.length;i++){
+			console.log(str.charAt(i));
+			if (ltr === str.charAt(i)){
+				return false;
+			}
+		}
+		return true;
+
+	}
+
+	// MAIN PROCESS
+	// ==============================================================================
+
+	startGame();
+	playGame();
+
+</script>
+
+</body>
+</html>
