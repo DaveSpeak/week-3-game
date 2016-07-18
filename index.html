@@ -3,12 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Hangman Game</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-theme.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
-
-<h1>Hangman Game!</h1>
-<h1>Press any letter to get started</h1>
-<div id="gamestart"></div>
+<div class="jumbotron">
+	<h1 class="text-center">Space Hangman Game!</h1>
+	<h2 class="text-center">Press any letter to get started</h2>
+</div>
+<div class="row">
+	<div id="side-container" class="col-md-3"></div>
+	<div id="bonus-container" class="col-md-3">
+		<img src="assets/images/spacewalk3.jpg" alt="Space image" width=100% max-width=200px/>
+	</div>
+	<div id="gamestart" class="col-md-3"></div>
+</div>
+	<div id="side-container" class="col-md-3"></div>
 
 <script>
 
@@ -17,6 +29,7 @@
 
 	var words = ["Skylab", "Apollo", "Armstrong", "Hubble", "quasar", "galaxy", "Saturn", "Jupiter", "Venus", "Space Shuttle" ]
 	var wins = 0;
+	var losses = 0;
 	var maxGuesses = 10;
 	var gameDiv = document.getElementById("gamestart");
 	var dashes = "";
@@ -58,7 +71,8 @@
 					alert("Congrats - you win!!");
 					startGame();
 				}else if (guesses==0){
-					alert("Sorry - you lose!");
+					losses++;
+					alert("Sorry - you lose! The word was "+answer);
 					startGame();
 				}
 			}
@@ -85,10 +99,11 @@
 		return returnstr;
 }
 	function displayHead(){
-		mainHead.innerHTML = "<h1>Wins: "+wins+
-		"<h1><h1>Guesses Remaining: "+guesses+
-		"<h1><h1>Current word<h1>"+spreadDisplay(dashes," ",true)+
-		"<h1>Letters Already Guessed:<h1>"+spreadDisplay(lettersGuessed,", ",false);
+		mainHead.innerHTML = "<h1><strong>Wins: "+wins+
+		"</strong></h1><h1><strong>Losses: "+losses+
+		"</strong></h1><h1><strong>Guesses Remaining: "+guesses+
+		"</strong></h1><h1><strong>Current word:</strong></h1>"+"<h1><strong>"+spreadDisplay(dashes," ",true)+
+		"</strong></h1><h1><strong>Letters Already Guessed:</strong></h1>"+spreadDisplay(lettersGuessed,", ",false);
 		gameDiv.appendChild(mainHead);
 
 	}

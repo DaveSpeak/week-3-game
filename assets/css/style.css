@@ -1,0 +1,16 @@
+body {
+/*	font-size: 20px;
+	line-height: 25px;
+	color: #777777;
+	font-family:'Arial','Helvetica Neue',  Helvetica, sans-serif;*/
+	background-image:url(../images/sky-lights-space-dark.jpg);
+	color:#000;
+}
+.jumbotron {
+	background-image:url(../images/Space-Industries.png);
+	color:#bbb;
+}
+.bonusImage{
+	width:100%;
+	max-width:100px;
+}
