@@ -3,14 +3,14 @@ body {
 	line-height: 25px;
 	color: #777777;
 	font-family:'Arial','Helvetica Neue',  Helvetica, sans-serif;*/
-	background-image:url(../images/sky-lights-space-dark.jpg);
-	color:#000;
+	background-image:url(../images/space-004.jpg);
+	color:#fff;
 }
 .jumbotron {
-	background-image:url(../images/Space-Industries.png);
+	background-image:url(../images/space-004.jpg);
 	color:#bbb;
 }
-.bonusImage{
+#bonusImage{
 	width:100%;
-	max-width:100px;
+	max-width:400px;
 }
