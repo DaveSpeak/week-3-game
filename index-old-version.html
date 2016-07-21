@@ -1,3 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hangman Game</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-theme.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+<body>
+<div class="jumbotron">
+	<h1 class="text-center">Space Hangman Game!</h1>
+	<h2 class="text-center">Press any letter to get started</h2>
+	<audio><source id="winSound" src="assets/sounds/crowdapplause.mp3" type="audio/mpeg"></audio>
+</div>
+<div class="row">
+	<div id="side-container" class="col-md-3"></div>
+	<div id="bonus-container" class="col-md-3">
+		<img id ='bonusImage' src='assets/images/galaxy.jpg' alt='Space image'/>
+		<h1 id="bonusText"><strong></strong></h1>
+	</div>
+	<div id="gamestart" class="col-md-3"></div>
+</div>
+	<div id="side-container" class="col-md-3"></div>
+
+<script>
+
 	// VARIABLES
 	// ==========================================================================
 
@@ -6,12 +34,12 @@
 		{word:"Apollo", picture:"Apollo.jpg", winSound:"beep13.mp3"}, 
 		{word:"Armstrong", picture:"neil_armstrong-1000.jpg", winSound:"beep19.mp3"}, 
 		{word:"Hubble", picture:"Hubble_01.jpg", winSound:"crowdapplause.mp3"}, 
-		{word:"quasar", picture:"quasar.jpg", winSound:"350352__robinhood76__06741-good-news-magic-ding.wav"}, 
-		{word:"galaxy", picture:"galaxy.jpg", winSound:"254037__jagadamba__stereo-space-sound.wav"}, 
-		{word:"Saturn", picture:"saturn.jpg", winSound:"256402__jagadamba__ambient-space-effect-v6.mp3"}, 
-		{word:"Jupiter", picture:"jupiter.jpg", winSound:"195745__mishicu__mod-pad2.wav"}, 
-		{word:"Venus", picture:"venus.jpg", winSound:"214072__wubitog__space-beam.wav"}, 
-		{word:"SpaceShuttle", picture:"spaceshuttle.jpg", winSound:"259285__philip-daniels__launch.wav"}
+		{word:"quasar", picture:"quasar.jpg", winSound:"crowdapplause.mp3"}, 
+		{word:"galaxy", picture:"galaxy.jpg", winSound:"crowdapplause.mp3"}, 
+		{word:"Saturn", picture:"saturn.jpg", winSound:"crowdapplause.mp3"}, 
+		{word:"Jupiter", picture:"jupiter.jpg", winSound:"crowdapplause.mp3"}, 
+		{word:"Venus", picture:"venus.jpg", winSound:"crowdapplause.mp3"}, 
+		{word:"Space Shuttle", picture:"spaceshuttle.jpg", winSound:"crowdapplause.mp3"}
 		]
 	var wins = 0;
 	var losses = 0;
@@ -25,6 +53,7 @@
 
 	// FUNCTIONS
 	// ==============================================================================
+
 	function startGame(){
 		answerIndex = Math.floor(Math.random()*words.length);
 		answer = words[answerIndex].word;
@@ -35,17 +64,14 @@
 		for(var i = 0; i < answer.length; i++) {
 			dashes+="-";
 		}
+		console.log(dashes);
 		displayHead();
 	}
 
-
 	function playGame() {
 		document.onkeyup = function(event){
-			if (dashes===answer){startGame();}
-			var event = event.keyCode;
-			if (event == 116) {event = -1;}
-			var letter = String.fromCharCode(event).toLowerCase();
-			if (checkUsed(lettersGuessed,letter) && letter.match(/[a-z]/i)) {
+			var letter = String.fromCharCode(event.keyCode).toLowerCase();
+			if (checkUsed(lettersGuessed,letter) && letter.match(/[a-z," "]/i)) {
 				lettersGuessed+=letter;
 				guesses--;
 				for (i=0;i<answer.length;i++) {
@@ -57,9 +83,12 @@
 				displayHead();
 				if (dashes === answer){
 					wins++;
+					// alert("Congrats - you win!!");
 					winReplace(answerIndex);
+					startGame();
 				}else if (guesses==0){
 					losses++;
+					// alert("Sorry - you lose! The word was "+answer);
 					loseReplace(answerIndex);
 					startGame();
 				}
@@ -97,6 +126,7 @@
 	}
 	function checkUsed(str,ltr){
 		for (i=0;i<str.length;i++){
+			console.log(str.charAt(i));
 			if (ltr === str.charAt(i)){
 				return false;
 			}
@@ -115,12 +145,15 @@
 		var newImage = document.getElementById("bonusImage").src="assets/images/"+words[i].picture;
 		var newAlt = document.getElementById("bonusImage").alt=words[i].word;
 		document.getElementById("bonusText").innerHTML = "Sorry, you lose. The word was '"+words[i].word+"'";
-		var win = new Audio('assets/sounds/254278__jagadamba__burp-mechanical-robot-robotic.wav');
-		win.play();	}
-
+	}
 
 	// MAIN PROCESS
 	// ==============================================================================
 
 	startGame();
 	playGame();
+
+</script>
+
+</body>
+</html>

@@ -9,151 +9,22 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
-<div class="jumbotron">
-	<h1 class="text-center">Space Hangman Game!</h1>
-	<h2 class="text-center">Press any letter to get started</h2>
-	<audio><source id="winSound" src="assets/sounds/crowdapplause.mp3" type="audio/mpeg"></audio>
-</div>
-<div class="row">
-	<div id="side-container" class="col-md-3"></div>
-	<div id="bonus-container" class="col-md-3">
-		<img id ='bonusImage' src='assets/images/galaxy.jpg' alt='Space image'/>
-		<h1 id="bonusText"><strong></strong></h1>
+	<div class="jumbotron">
+		<h1 class="text-center">Space Hangman Game!</h1>
+		<h2 class="text-center">Press any letter to get started</h2>
+		<audio><source id="winSound" src="assets/sounds/crowdapplause.mp3" type="audio/mpeg"></audio>
 	</div>
-	<div id="gamestart" class="col-md-3"></div>
-</div>
-	<div id="side-container" class="col-md-3"></div>
-
-<script>
-
-	// VARIABLES
-	// ==========================================================================
-
-	var words = [
-		{word:"Skylab", picture:"Skylab_(SL-4).jpg", winSound:"beep15.mp3"}, 
-		{word:"Apollo", picture:"Apollo.jpg", winSound:"beep13.mp3"}, 
-		{word:"Armstrong", picture:"neil_armstrong-1000.jpg", winSound:"beep19.mp3"}, 
-		{word:"Hubble", picture:"Hubble_01.jpg", winSound:"crowdapplause.mp3"}, 
-		{word:"quasar", picture:"quasar.jpg", winSound:"crowdapplause.mp3"}, 
-		{word:"galaxy", picture:"galaxy.jpg", winSound:"crowdapplause.mp3"}, 
-		{word:"Saturn", picture:"saturn.jpg", winSound:"crowdapplause.mp3"}, 
-		{word:"Jupiter", picture:"jupiter.jpg", winSound:"crowdapplause.mp3"}, 
-		{word:"Venus", picture:"venus.jpg", winSound:"crowdapplause.mp3"}, 
-		{word:"Space Shuttle", picture:"spaceshuttle.jpg", winSound:"crowdapplause.mp3"}
-		]
-	var wins = 0;
-	var losses = 0;
-	var maxGuesses = 10;
-	var gameDiv = document.getElementById("gamestart");
-	var dashes = "";
-	var answer = "";
-	var mainHead = document.createElement("div");
-	var lettersGuessed ="";
-	var answerIndex = -1;
-
-	// FUNCTIONS
-	// ==============================================================================
-
-	function startGame(){
-		answerIndex = Math.floor(Math.random()*words.length);
-		answer = words[answerIndex].word;
-		guesses=maxGuesses;
-		lettersGuessed="";
-		dashes="";
-		console.log(answer);
-		for(var i = 0; i < answer.length; i++) {
-			dashes+="-";
-		}
-		console.log(dashes);
-		displayHead();
-	}
-
-	function playGame() {
-		document.onkeyup = function(event){
-			var letter = String.fromCharCode(event.keyCode).toLowerCase();
-			if (checkUsed(lettersGuessed,letter) && letter.match(/[a-z," "]/i)) {
-				lettersGuessed+=letter;
-				guesses--;
-				for (i=0;i<answer.length;i++) {
-					var test = answer.charAt(i);
-					if (letter==test.toLowerCase()){
-						dashes=setCharAt(dashes,i,test);
-					}
-				}
-				displayHead();
-				if (dashes === answer){
-					wins++;
-					// alert("Congrats - you win!!");
-					winReplace(answerIndex);
-					startGame();
-				}else if (guesses==0){
-					losses++;
-					// alert("Sorry - you lose! The word was "+answer);
-					loseReplace(answerIndex);
-					startGame();
-				}
-			}
-
-		}
-	}
-
-	function setCharAt(str,index,chr) {
-    	if(index > str.length-1) return str;
-    return str.substr(0,index) + chr + str.substr(index+1);
-	}
-
-	function spreadDisplay(str,char,flag){
-		var returnstr="";
-		for (i=0;i<str.length*2;i++){
-			if (i/2 === Math.floor(i/2)){
-				returnstr+=str.charAt(i/2);
-			}else {
-				if (flag || i!==(str.length*2)-1){
-				returnstr+=char;
-				}	
-			}
-		}
-		return returnstr;
-}
-	function displayHead(){
-		mainHead.innerHTML = "<h1><strong>Wins: "+wins+
-		"</strong></h1><h1><strong>Losses: "+losses+
-		"</strong></h1><h1><strong>Guesses Remaining: "+guesses+
-		"</strong></h1><h1><strong>Current word:</strong></h1>"+"<h1><strong>"+spreadDisplay(dashes," ",true)+
-		"</strong></h1><h1><strong>Letters Already Guessed:</strong></h1>"+"<h1><strong>"+spreadDisplay(lettersGuessed,", ",false)+"</strong>";
-		gameDiv.appendChild(mainHead);
-
-	}
-	function checkUsed(str,ltr){
-		for (i=0;i<str.length;i++){
-			console.log(str.charAt(i));
-			if (ltr === str.charAt(i)){
-				return false;
-			}
-		}
-		return true;
-
-	}
-	function winReplace(i){
-		var newImage = document.getElementById("bonusImage").src="assets/images/"+words[i].picture;
-		var newAlt = document.getElementById("bonusImage").alt=words[i].word;
-		document.getElementById("bonusText").innerHTML = "You Win!!";
-		var win = new Audio('assets/sounds/'+words[i].winSound);
-		win.play();
-	}
-	function loseReplace(i){
-		var newImage = document.getElementById("bonusImage").src="assets/images/"+words[i].picture;
-		var newAlt = document.getElementById("bonusImage").alt=words[i].word;
-		document.getElementById("bonusText").innerHTML = "Sorry, you lose. The word was '"+words[i].word+"'";
-	}
-
-	// MAIN PROCESS
-	// ==============================================================================
-
-	startGame();
-	playGame();
-
-</script>
+	<div class="row">
+<!-- 		<div id="side-container" class="col-md-3"></div>
+ -->		<div id="bonus-container" class="col-md-6">
+			<img id ='bonusImage' src='assets/images/spacewalk3.jpg' alt='Space image'/>
+			<h1 id="bonusText"><strong></strong></h1>
+		</div>
+		<div id="gamestart" class="col-md-6"></div>
+	</div>
+<!-- 	<div id="side-container" class="col-md-3"></div>
+ -->
+	<script src="assets/javascript/game.js"></script>
 
 </body>
 </html>
